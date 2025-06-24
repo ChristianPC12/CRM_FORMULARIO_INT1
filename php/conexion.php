@@ -2,7 +2,7 @@
 $host = "localhost";
 $usuario = "root";
 $contrasena = "";
-$bd = "bd_bastos_crm";
+$bd = "";
 
 $conexion = new mysqli($host, $usuario, $contrasena, $bd);
 
