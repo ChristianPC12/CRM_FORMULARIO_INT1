@@ -86,6 +86,7 @@ input:focus {
   font-weight: bold;
 }
 
+/* Botón */
 .btn-enviar {
   margin-top: 35px;
   padding: 14px 0;
@@ -105,6 +106,65 @@ input:focus {
   color: #ffffff;
 }
 
+/* Modal confirmación */
+#modalConfirmCorreo {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+#modalConfirmCorreo.active {
+  display: flex;
+}
+
+#modalConfirmCorreo .modal-content {
+  background: #fff;
+  padding: 25px 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  font-size: 1rem;
+  color: #202124;
+}
+
+#modalConfirmCorreo .modal-buttons {
+  margin-top: 20px;
+}
+
+#modalConfirmCorreo button {
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  margin: 0 8px;
+  transition: background-color 0.3s ease;
+}
+
+#modalConfirmCorreo #btnConfirmarEnviar {
+  background-color: #F9C41F;
+  color: #000000;
+}
+
+#modalConfirmCorreo #btnConfirmarEnviar:hover {
+  background-color: #d1a80f;
+}
+
+#modalConfirmCorreo #btnCancelarEnviar {
+  background-color: #838886;
+  color: #ffffff;
+}
+
+#modalConfirmCorreo #btnCancelarEnviar:hover {
+  background-color: #666969;
+}
 
 /* Responsive para móviles */
 @media (max-width: 600px) {
