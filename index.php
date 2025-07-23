@@ -113,24 +113,104 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <?php if (!empty($errores['lugar_residencia'])): ?><p style="color: red;"><?= $errores['lugar_residencia'] ?></p><?php endif; ?>
 
       <datalist id="lugares">
-        <option value="Cañas, Guanacaste">
-        <option value="Liberia, Guanacaste">
-        <option value="Bagaces, Guanacaste">
-        <option value="Tilarán, Guanacaste">
-        <option value="Abangares, Guanacaste">
-        <option value="Carrillo, Guanacaste">
-        <option value="Santa Cruz, Guanacaste">
-        <option value="Nicoya, Guanacaste">
-        <option value="La Cruz, Guanacaste">
-        <option value="Nandayure, Guanacaste">
-        <option value="Hojancha, Guanacaste">
-        <option value="San José, San José">
-        <option value="Alajuela, Alajuela">
-        <option value="Cartago, Cartago">
-        <option value="Heredia, Heredia">
-        <option value="Puntarenas, Puntarenas">
-        <option value="Limón, Limón">
-      </datalist>
+
+        <!-- Guanacaste -->
+  <option value="Liberia, Guanacaste">
+  <option value="Nicoya, Guanacaste">
+  <option value="Santa Cruz, Guanacaste">
+  <option value="Bagaces, Guanacaste">
+  <option value="Carrillo, Guanacaste">
+  <option value="Cañas, Guanacaste">
+  <option value="Abangares, Guanacaste">
+  <option value="Tilarán, Guanacaste">
+  <option value="Nandayure, Guanacaste">
+  <option value="La Cruz, Guanacaste">
+  <option value="Hojancha, Guanacaste">
+  <!-- San José -->
+  <option value="San José, San José">
+  <option value="Escazú, San José">
+  <option value="Desamparados, San José">
+  <option value="Puriscal, San José">
+  <option value="Tarrazú, San José">
+  <option value="Aserrí, San José">
+  <option value="Mora, San José">
+  <option value="Goicoechea, San José">
+  <option value="Santa Ana, San José">
+  <option value="Alajuelita, San José">
+  <option value="Vásquez de Coronado, San José">
+  <option value="Acosta, San José">
+  <option value="Tibás, San José">
+  <option value="Moravia, San José">
+  <option value="Montes de Oca, San José">
+  <option value="Turrubares, San José">
+  <option value="Dota, San José">
+  <option value="Curridabat, San José">
+  <option value="Pérez Zeledón, San José">
+  <option value="León Cortés, San José">
+
+  <!-- Alajuela -->
+  <option value="Alajuela, Alajuela">
+  <option value="San Ramón, Alajuela">
+  <option value="Grecia, Alajuela">
+  <option value="San Mateo, Alajuela">
+  <option value="Atenas, Alajuela">
+  <option value="Naranjo, Alajuela">
+  <option value="Palmares, Alajuela">
+  <option value="Poás, Alajuela">
+  <option value="Orotina, Alajuela">
+  <option value="San Carlos, Alajuela">
+  <option value="Zarcero, Alajuela">
+  <option value="Valverde Vega, Alajuela">
+  <option value="Upala, Alajuela">
+  <option value="Los Chiles, Alajuela">
+  <option value="Guatuso, Alajuela">
+  <option value="Río Cuarto, Alajuela">
+
+  <!-- Cartago -->
+  <option value="Cartago, Cartago">
+  <option value="Paraíso, Cartago">
+  <option value="La Unión, Cartago">
+  <option value="Jiménez, Cartago">
+  <option value="Turrialba, Cartago">
+  <option value="Alvarado, Cartago">
+  <option value="Oreamuno, Cartago">
+  <option value="El Guarco, Cartago">
+
+  <!-- Heredia -->
+  <option value="Heredia, Heredia">
+  <option value="Barva, Heredia">
+  <option value="Santo Domingo, Heredia">
+  <option value="Santa Bárbara, Heredia">
+  <option value="San Rafael, Heredia">
+  <option value="San Isidro, Heredia">
+  <option value="Belén, Heredia">
+  <option value="Flores, Heredia">
+  <option value="San Pablo, Heredia">
+  <option value="Sarapiquí, Heredia">
+
+
+
+  <!-- Puntarenas -->
+  <option value="Puntarenas, Puntarenas">
+  <option value="Esparza, Puntarenas">
+  <option value="Buenos Aires, Puntarenas">
+  <option value="Montes de Oro, Puntarenas">
+  <option value="Osa, Puntarenas">
+  <option value="Quepos, Puntarenas">
+  <option value="Golfito, Puntarenas">
+  <option value="Coto Brus, Puntarenas">
+  <option value="Parrita, Puntarenas">
+  <option value="Corredores, Puntarenas">
+  <option value="Garabito, Puntarenas">
+
+  <!-- Limón -->
+  <option value="Limón, Limón">
+  <option value="Pococí, Limón">
+  <option value="Siquirres, Limón">
+  <option value="Talamanca, Limón">
+  <option value="Matina, Limón">
+  <option value="Guácimo, Limón">
+</datalist>
 
       <label for="fecha_cumpleanos">Fecha de nacimiento <span class="obligatorio">*</span></label>
       <input type="date" id="fecha_cumpleanos" name="fecha_cumpleanos" value="<?= htmlspecialchars($fechaCumpleanos) ?>" required />
