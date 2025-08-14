@@ -80,6 +80,45 @@ $esError = $tipo === 'error';
     }
   </style>
 </head>
+<script>
+  (function () {
+    const f = document.getElementById('fechaNacimiento');
+    if (!f) return;
+
+    // Reforzar límites por si el HTML quedó cacheado
+    f.min = '1900-01-01';
+    f.max = new Date().toISOString().slice(0, 10);
+
+    function edadOk(iso) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return false;
+      const [y,m,d] = iso.split('-').map(Number);
+      const fecha = new Date(Date.UTC(y, m - 1, d));
+      const real =
+        fecha.getUTCFullYear() === y &&
+        (fecha.getUTCMonth() + 1) === m &&
+        fecha.getUTCDate() === d;
+      if (!real) return false;
+
+      const hoy = new Date();
+      if (new Date(y, m - 1, d) > hoy) return false; // no futuro
+      if (y < 1900) return false;                    // mínimo 1900
+
+      let edad = hoy.getFullYear() - y;
+      if ((hoy.getMonth()+1 < m) || ((hoy.getMonth()+1) === m && hoy.getDate() < d)) edad--;
+      return edad >= 0 && edad <= 120;
+    }
+
+    f.addEventListener('input', () => {
+      if (f.value && !edadOk(f.value)) {
+        f.setCustomValidity('Fecha inválida. Use AAAA-MM-DD (1900–hoy) y edad 0–120.');
+      } else {
+        f.setCustomValidity('');
+      }
+    });
+  })();
+</script>
+
+
 <body>
   <div class="mensaje-box">
     <h1><?= htmlspecialchars($titulo) ?></h1>
