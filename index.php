@@ -1,6 +1,23 @@
 <?php
 include("php/conexion.php");
 
+// --- Validador estricto de fecha de nacimiento ---
+function validarFechaCumpleEstricto(string $s): bool {
+  // Formato exacto AAAA-MM-DD
+  $dt = DateTime::createFromFormat('Y-m-d', $s);
+  if (!$dt || $dt->format('Y-m-d') !== $s) return false;
+
+  // Rango permitido [1900-01-01, hoy]
+  $min = new DateTime('1900-01-01');
+  $hoy = new DateTime('today');
+  if ($dt < $min || $dt > $hoy) return false;
+
+  // Edad 0–120
+  $edad = (int)$dt->diff($hoy)->y;
+  return $edad >= 0 && $edad <= 120;
+}
+
+
 $errores = [];
 $cedula = $nombre = $correo = $telefono = $lugarResidencia = $fechaCumpleanos = "";
 
@@ -10,7 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $correo = trim($_POST['correo'] ?? '');
   $telefono = trim($_POST['telefono'] ?? '');
   $lugarResidencia = trim($_POST['lugar_residencia'] ?? '');
-  $fechaCumpleanos = $_POST['fecha_cumpleanos'] ?? '';
+ // Acepta el nombre real del input; si quieres compatibilidad, deja ambos.
+  $fechaCumpleanos = $_POST['fechaNacimiento'] ?? ($_POST['fecha_cumpleanos'] ?? '');
+
+
   $alergias = trim($_POST['alergias'] ?? '');
   $gustosEspeciales = trim($_POST['gustos_especiales'] ?? '');
 
@@ -35,10 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $errores['lugar_residencia'] = "Debe tener al menos 4 caracteres.";
   }
 
-  if (empty($fechaCumpleanos) || $fechaCumpleanos > date('Y-m-d')) {
-    $errores['fecha_cumpleanos'] = "Fecha no válida.";
+  if (!validarFechaCumpleEstricto($fechaCumpleanos)) {
+    $errores['fechaNacimiento'] = "Fecha no válida (use AAAA-MM-DD; entre 1900 y hoy; edad 0–120).";
   }
-
+  
   if (strlen($alergias) > 100) {
     $errores['alergias'] = "Máximo 100 caracteres.";
   }
@@ -241,11 +261,19 @@ $stmt->bind_param("ssssssss", $cedula, $nombre, $correo, $telefono, $lugarReside
         <option value="Guácimo, Limón">
       </datalist>
 
-      <label for="fecha_cumpleanos">Fecha de nacimiento <span class="obligatorio">*</span></label>
-      <input type="date" id="fecha_cumpleanos" name="fecha_cumpleanos" value="<?= htmlspecialchars($fechaCumpleanos) ?>"
-        required />
-      <?php if (!empty($errores['fecha_cumpleanos'])): ?>
-        <p style="color: red;"><?= $errores['fecha_cumpleanos'] ?></p><?php endif; ?>
+      <input
+  type="date"
+  name="fechaNacimiento"
+  id="fechaNacimiento"
+  class="form-control"
+  required
+  min="1900-01-01"
+  max="<?php echo date('Y-m-d'); ?>"
+>
+
+<?php if (!empty($errores['fechaNacimiento'])): ?>
+  <p style="color: red;"><?= $errores['fechaNacimiento'] ?></p>
+<?php endif; ?>
 
         <label for="alergias">Alergias (opcional)</label>
       <input type="text" id="alergias" name="alergias" value="<?= htmlspecialchars($_POST['alergias'] ?? '') ?>"
