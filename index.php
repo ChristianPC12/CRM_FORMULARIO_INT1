@@ -2,18 +2,21 @@
 include("php/conexion.php");
 
 // --- Validador estricto de fecha de nacimiento ---
-function validarFechaCumpleEstricto(string $s): bool {
+function validarFechaCumpleEstricto(string $s): bool
+{
   // Formato exacto AAAA-MM-DD
   $dt = DateTime::createFromFormat('Y-m-d', $s);
-  if (!$dt || $dt->format('Y-m-d') !== $s) return false;
+  if (!$dt || $dt->format('Y-m-d') !== $s)
+    return false;
 
   // Rango permitido [1900-01-01, hoy]
   $min = new DateTime('1900-01-01');
   $hoy = new DateTime('today');
-  if ($dt < $min || $dt > $hoy) return false;
+  if ($dt < $min || $dt > $hoy)
+    return false;
 
   // Edad 0–120
-  $edad = (int)$dt->diff($hoy)->y;
+  $edad = (int) $dt->diff($hoy)->y;
   return $edad >= 0 && $edad <= 120;
 }
 
@@ -27,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   $correo = trim($_POST['correo'] ?? '');
   $telefono = trim($_POST['telefono'] ?? '');
   $lugarResidencia = trim($_POST['lugar_residencia'] ?? '');
- // Acepta el nombre real del input; si quieres compatibilidad, deja ambos.
+  // Acepta el nombre real del input; si quieres compatibilidad, deja ambos.
   $fechaCumpleanos = $_POST['fechaNacimiento'] ?? ($_POST['fecha_cumpleanos'] ?? '');
 
 
@@ -58,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   if (!validarFechaCumpleEstricto($fechaCumpleanos)) {
     $errores['fechaNacimiento'] = "Fecha no válida (use AAAA-MM-DD; entre 1900 y hoy; edad 0–120).";
   }
-  
+
   if (strlen($alergias) > 100) {
     $errores['alergias'] = "Máximo 100 caracteres.";
   }
@@ -82,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
       $stmt = $conexion->prepare($sql);
-$stmt->bind_param("ssssssss", $cedula, $nombre, $correo, $telefono, $lugarResidencia, $fechaCumpleanos, $alergias, $gustosEspeciales);
+      $stmt->bind_param("ssssssss", $cedula, $nombre, $correo, $telefono, $lugarResidencia, $fechaCumpleanos, $alergias, $gustosEspeciales);
 
       if ($stmt->execute()) {
         echo "<script>
@@ -261,21 +264,16 @@ $stmt->bind_param("ssssssss", $cedula, $nombre, $correo, $telefono, $lugarReside
         <option value="Guácimo, Limón">
       </datalist>
 
-      <input
-  type="date"
-  name="fechaNacimiento"
-  id="fechaNacimiento"
-  class="form-control"
-  required
-  min="1900-01-01"
-  max="<?php echo date('Y-m-d'); ?>"
->
+      <label for="fechaNacimiento">Fecha de nacimiento <span class="obligatorio">*</span></label>
 
-<?php if (!empty($errores['fechaNacimiento'])): ?>
-  <p style="color: red;"><?= $errores['fechaNacimiento'] ?></p>
-<?php endif; ?>
+      <input type="date" name="fechaNacimiento" id="fechaNacimiento" class="form-control" required min="1900-01-01"
+        max="<?php echo date('Y-m-d'); ?>">
 
-        <label for="alergias">Alergias (opcional)</label>
+      <?php if (!empty($errores['fechaNacimiento'])): ?>
+        <p style="color: red;"><?= $errores['fechaNacimiento'] ?></p>
+      <?php endif; ?>
+
+      <label for="alergias">Alergias (opcional)</label>
       <input type="text" id="alergias" name="alergias" value="<?= htmlspecialchars($_POST['alergias'] ?? '') ?>"
         placeholder="Ej: Mani, mariscos" />
 
@@ -285,7 +283,7 @@ $stmt->bind_param("ssssssss", $cedula, $nombre, $correo, $telefono, $lugarReside
 
       <button type="submit" class="btn-enviar">Enviar</button>
 
-      
+
 
     </form>
   </div>
